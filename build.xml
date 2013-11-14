@@ -1,0 +1,69 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="hello-ivy" default="resolve">
+   <!--taskdef resource="org/apache/ivy/ant/antlib.xml"
+            uri="antlib:org.apache.ivy.ant" classpath="/usr/share/java/ivy.jar"/-->
+
+  <property name="src.dir" location="${basedir}/src" />
+  <property name="build.dir" location="${basedir}/build" />
+
+  <path id="libjars">
+    <fileset dir="${basedir}/lib" includes="**/*.jar" />
+  </path>
+
+  <target name="resolve" description="retrieve dependencies with ivy">
+    <!--ivy:retrieve conf="sources" pattern="lib/[conf]/[artifact](-[classifier]).[ext]"/-->
+    <ivy:retrieve conf="binaries" pattern="lib/[conf]/[artifact](-[classifier]).[ext]"/>
+  </target>
+
+  <target name="clean" description="Remove build directories">
+    <!--delete dir="lib"/-->
+    <delete dir="${build.dir}" />
+  </target>
+
+  <target name="clean-all" depends="clean" description="clean ivy cache">
+    <ivy:cleancache />
+  </target>
+
+  <target name="compile" depends="clean">
+    <mkdir dir="${build.dir}/classes" />
+    <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}/classes" debug="on" source="1.6">
+      <classpath>
+        <path refid="libjars"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="runcukes" depends="compile">
+    <mkdir dir="target/cucumber-junit-report"/>
+    <java classname="cucumber.api.cli.Main" fork="true" failonerror="false" resultproperty="cucumber.exitstatus">
+      <classpath>
+        <path refid="libjars"/>
+        <pathelement location="${build.dir}/classes"/>
+      </classpath>
+      <arg value="--format"/>
+      <arg value="junit:target/cucumber-junit-report.xml"/>
+      <arg value="--format"/>
+      <arg value="pretty"/>
+      <arg value="--format"/>
+      <arg value="html:target/cucumber-html-report"/>
+      <arg value="--glue"/>
+      <arg value="com.github.dmacvicar.chinchilla"/>
+      <arg value="src/test/resources"/>
+    </java>
+
+    <junitreport todir="target/cucumber-junit-report">
+      <fileset dir="target">
+        <include name="cucumber-junit-report.xml"/>
+      </fileset>
+      <report format="frames" todir="target/cucumber-junit-report"/>
+    </junitreport>
+
+    <fail message="Cucumber failed">
+      <condition>
+        <not>
+          <equals arg1="${cucumber.exitstatus}" arg2="0"/>
+        </not>
+      </condition>
+    </fail>
+  </target>
+
+</project>
