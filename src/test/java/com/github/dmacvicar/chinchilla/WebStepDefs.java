@@ -1,17 +1,19 @@
 package com.github.dmacvicar.chinchilla;
 
 import com.google.inject.Inject;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class HelloStepDefs {
+public class WebStepDefs {
+
+    final private Session session;
 
     @Inject
-    private Session session;
+    public WebStepDefs(Session session) {
+        this.session = session;
+    }
 
     @When("^I go to google")
     public void I_go_to_google() throws Throwable {
@@ -21,6 +23,11 @@ public class HelloStepDefs {
     @When("^I follow \"([^\"]*)")
     public void I_follow(String what) throws Throwable {
         session.clickLink(what);
+    }
+
+    @When("^I click on \"([^\"]*)\"$")
+    public void I_click_on(String what) throws Throwable {
+        session.clickButton(what);
     }
 
     @Then("^I should see a \"([^\"]*)\" text$")

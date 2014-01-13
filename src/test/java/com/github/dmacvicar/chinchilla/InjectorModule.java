@@ -7,6 +7,7 @@ public class InjectorModule implements Module {
 
     private static final Session SHARED_SESSION = new Session();
 
+    @Override
     public void configure(Binder binder) {
         binder.bind(Session.class).toInstance(SHARED_SESSION);
     }

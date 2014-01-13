@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chinchilla Tests</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelector('#fill-by-label-input-test').oninput = function() {
+          document.querySelector('#fill-by-label-input-test-target').innerHTML = document.querySelector('#fill-by-label-input-test').value
+        }
+      }, false);
+    </script>
+
+  </head>
+  <body>
+
+    <form>
+        <label for="fill-by-label-input-test">fill-by-label-input Label Text</label>
+        <input id="fill-by-label-input-test" type="text">
+    </form>
+    <div id="fill-by-label-input-test-target"></div>
+    
+    <form>
+        <input value="fill-by-value-input Text" id="fill-by-value-input-test" type="text">
+    </form>
+    <div id="fill-by-value-input-test-target"></div>
+    
+  </body>
+</html>

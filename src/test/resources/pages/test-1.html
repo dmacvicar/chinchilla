@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chinchilla Tests</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#click-button-test').onclick = function() {
+          document.querySelector('#click-button-test-target').innerHTML = 'click-button-test OK';
+        }
+        document.querySelector('#follow-link-test').onclick = function() {
+          document.querySelector('#follow-link-test-target').innerHTML = 'follow-link-test OK';
+        }
+        document.querySelector('#fill-by-label-input-test').oninput = function() {
+          document.querySelector('#fill-by-label-input-test-target').innerHTML = document.querySelector('#fill-by-label-input-test').value
+        }
+      }, false);
+    </script>
+
+  </head>
+  <body>
+
+    <button id="click-button-test">click-button-test Button</button>
+    <div id="click-button-test-target"></div>
+    <a id="follow-link-test">follow-link-test Link</a>
+    <div id="follow-link-test-target"></div>
+
+    <form>
+        <label for="fill-by-label-input-test">fill-by-label-input Text</label>
+        <input id="fill-by-label-input-test" type="text">
+    </form>
+    <div id="fill-by-label-input-test-target"></div>
+    
+    <form>
+        <input value="fill-by-value-input Text" id="fill-by-value-input-test" type="text">
+    </form>
+    <div id="fill-by-value-input-test-target"></div>
+    
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chinchilla Tests</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#click-button-test').onclick = function() {
+          document.querySelector('#click-button-test-target').innerHTML = 'click-button-test OK';
+        }
+        document.querySelector('#follow-link-test').onclick = function() {
+          document.querySelector('#follow-link-test-target').innerHTML = 'follow-link-test OK';
+        }
+      }, false);
+    </script>
+
+  </head>
+  <body>
+
+    <button id="click-button-test">click-button-test Button</button>
+    <div id="click-button-test-target"></div>
+    <a id="follow-link-test">follow-link-test Link</a>
+    <div id="follow-link-test-target"></div>
+
+    
+    
+  </body>
+</html>
